@@ -3,6 +3,6 @@ A small Streamlit test app for a random daily use case I wanted to try out. So m
 
 **check it out here**: https://studyhr.streamlit.app/
 
-Ill post the progress due to the app and if its really helping her be organized. and the further version would be making a advanced ML model to make predictions of possible burn out or possibly missing a day of study and adding the test scores csv to make a correlation model which would help me deploy the final summary.
+Ill post the progress due to the app and if its really helping her be organized. and the further version would be making a advanced ML model to make predictions of possible burn out or possibly missing a day of study and adding the test scores csv to make a correlation model which would help me deploy the final summary. See you in 3-4 months when i have the data
 
 (she doesnt know shes a test subject for my LLM-Augmented App in progress by contributing original data LOLLL)
