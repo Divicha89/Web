@@ -3,17 +3,8 @@ import pandas as pd
 import datetime
 import altair as alt
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-import google.generativeai as genai
 from google.oauth2.service_account import Credentials
-
-# Google Sheets authentication
-credentials = Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"],
-    scopes=["https://www.googleapis.com/auth/spreadsheets"]
-)
-client = gspread.authorize(credentials)
-sheet = client.open("habit_log").sheet1
+import google.generativeai as genai
 
 # --- Setup ---
 st.set_page_config(page_title="Habit Logger", layout="wide")
@@ -22,15 +13,16 @@ st.title("📅 Habit & Time Tracker")
 # --- Google Sheets Setup ---
 @st.cache_resource
 def connect_gsheet():
-    scope = [
+    scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
-    creds_dict = st.secrets["gcp_service_account"]
-    creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+    creds = Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"],
+        scopes=scopes
+    )
     client = gspread.authorize(creds)
-    sheet = client.open("habit_log").worksheet("Sheet1")
-    return sheet
+    return client.open("habit_log").worksheet("Sheet1")
 
 sheet = connect_gsheet()
 
@@ -61,14 +53,17 @@ with tab1:
         if submitted and habit:
             habit_clean = habit.strip().lower()
             duration = (datetime.datetime.combine(date, end_time) - datetime.datetime.combine(date, start_time)).total_seconds() / 3600
-            sheet.append_row([
-                habit_clean,
-                start_time.strftime('%H:%M'),
-                end_time.strftime('%H:%M'),
-                date.isoformat(),
-                round(duration, 2)
-            ])
-            st.success(f"✅ Logged '{habit_clean}' from {start_time.strftime('%H:%M')} to {end_time.strftime('%H:%M')} on {date}.")
+            try:
+                sheet.append_row([
+                    habit_clean,
+                    start_time.strftime('%H:%M'),
+                    end_time.strftime('%H:%M'),
+                    date.isoformat(),
+                    round(duration, 2)
+                ])
+                st.success(f"✅ Logged '{habit_clean}' from {start_time.strftime('%H:%M')} to {end_time.strftime('%H:%M')} on {date}.")
+            except Exception as e:
+                st.error(f"❌ Failed to append row: {e}")
 
 with tab2:
     st.subheader("Filter & Analyze")
@@ -112,6 +107,8 @@ with tab2:
 
 # --- Sidebar for Gemini AI ---
 with st.sidebar:
+    st.text("✅ Sheet Connected")
+    st.text(f"📊 {len(df)} rows loaded")
     if st.button("💬 Show AI Feedback"):
         if not filtered_df.empty:
             prompt_context = "\n".join([
