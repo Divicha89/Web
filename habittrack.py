@@ -22,11 +22,14 @@ st.title("📅 Habit & Time Tracker")
 # --- Google Sheets Setup ---
 @st.cache_resource
 def connect_gsheet():
-    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    scope = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
     creds_dict = st.secrets["gcp_service_account"]
     creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
     client = gspread.authorize(creds)
-    sheet = client.open("habit_log").sheet1
+    sheet = client.open("habit_log").worksheet("Sheet1")
     return sheet
 
 sheet = connect_gsheet()
