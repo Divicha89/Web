@@ -9,7 +9,7 @@ import google.generativeai as genai
 
 # --- Setup ---
 st.set_page_config(page_title="Habit Logger", layout="wide")
-st.title("📅 Habit & Time Tracker")
+st.title("📅 Joshitha Study Tracker")
 
 # --- Database Setup ---
 DB_FILE = "habits.db"
