@@ -5,6 +5,15 @@ import altair as alt
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import google.generativeai as genai
+from google.oauth2.service_account import Credentials
+
+# Google Sheets authentication
+credentials = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=["https://www.googleapis.com/auth/spreadsheets"]
+)
+client = gspread.authorize(credentials)
+sheet = client.open("habit_log").sheet1
 
 # --- Setup ---
 st.set_page_config(page_title="Habit Logger", layout="wide")
