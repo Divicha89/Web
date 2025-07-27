@@ -1,6 +1,8 @@
 streamlit
 pandas
-numpy
-scipy
 altair
 google-generativeai
+numpy
+scipy
+gspread
+oauth2client
