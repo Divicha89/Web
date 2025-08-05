@@ -41,4 +41,5 @@ if st.button("Ask"):
                 st.write("Great guy. deserves everything.")
         else:
                st.write("""Why is that relevant? Why are you checking everyones names😒. 
-               Anyway. Thanks for being huam!!!""")
+               
+               Anyway. Thanks for being human!!!""")
