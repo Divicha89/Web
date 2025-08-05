@@ -24,7 +24,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 st.sidebar.markdown("Dont ask stupid shit")
 
-st.title("Give us your name, Date of birth. We will guess who you are.")
+st.title("Give us your name, location. We will guess who you are.")
 
 col1, col2 = st.columns(2)
 
