@@ -40,4 +40,5 @@ if st.button("Ask"):
         elif query.strip().lower() =='divija':
                 st.write("Great guy. deserves everything.")
         else:
-               st.write("Why is that relevant? Why are you checking everyones names😒")
+               st.write("""Why is that relevant? Why are you checking everyones names😒. 
+               Anyway. Thanks for being huam!!!""")
